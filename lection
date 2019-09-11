@@ -1,0 +1,65 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Net;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using WindowsFormsApp5.parser;
+
+namespace WindowsFormsApp5
+{
+    public partial class LectionForm : Form
+    {
+
+        Progress userProgress;
+        public LectionForm(Progress prog)
+        {
+            userProgress = prog;
+            InitializeComponent();
+        }
+
+        private void LectionForm_Load(object sender, EventArgs e)
+        {
+
+            lection lec = (lection)((LectionForm)sender).Tag;
+            if (userProgress.lections.Count > 0)
+            {
+
+                if (userProgress.getLectionProgress(lec.id))
+                {
+                    MessageBox.Show("Лекция прочитана");                    
+                }
+                else
+                {
+                    MessageBox.Show("Лекция не прочитана");
+                    userProgress.setLectionProgress(lec.id);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Лекция не прочитана");
+                userProgress.setLectionProgress(lec.id);
+            }
+
+
+            this.mainText.Width = 1250;
+            this.title.Text = lec.name;
+            this.title.Font = new Font("Times New Roman", 16, FontStyle.Bold);
+            this.title.TextAlign = ContentAlignment.TopCenter;
+            this.mainText.Text = lec.text;
+            this.mainText.Font = new Font("Times New Roman", 14, FontStyle.Italic);
+            int i = 1;
+ 
+
+        }
+        
+
+        
+
+    }
+}
